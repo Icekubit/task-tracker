@@ -1,4 +1,4 @@
-package icekubit.tasktrackerbackend.dto;
+package icekubit.tasktrackerbackend.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
