@@ -1,5 +1,7 @@
 package icekubit.tasktrackerbackend.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import icekubit.tasktrackerbackend.model.dto.ErrorResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,7 +22,12 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
                          AuthenticationException authException) throws IOException, ServletException {
 
         log.error("Unauthorized error: {}", authException.getMessage());
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: unauthorized");
 
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        ErrorResponse errorResponse = new ErrorResponse("Error: unauthorized");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonResponse = objectMapper.writeValueAsString(errorResponse);
+        response.getWriter().write(jsonResponse);
     }
 }
